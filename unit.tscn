@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b5rmwb1pmook"]
+
+[ext_resource type="Script" uid="uid://dmy2uqy3nkvvl" path="res://unit.gd" id="1_ctwoc"]
+[ext_resource type="Texture2D" uid="uid://cu5glesidtteb" path="res://icon.svg" id="2_davkp"]
+[ext_resource type="Script" uid="uid://wsl25dg622bc" path="res://unit_state_manager.gd" id="3_davkp"]
+[ext_resource type="Script" uid="uid://dk2duril0hxvk" path="res://queueing_moves.gd" id="4_1sk4h"]
+[ext_resource type="Script" uid="uid://bqciqppemdnfb" path="res://dancing.gd" id="5_baxm0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(25, 25)
+
+[node name="Unit" type="CharacterBody2D" unique_id=679955636]
+script = ExtResource("1_ctwoc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=705627928]
+texture = ExtResource("2_davkp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=145315928]
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="UnitControl" type="Control" parent="." unique_id=940542867]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FoodAmountLabel" type="Label" parent="UnitControl" unique_id=519322142]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -84.0
+offset_top = -64.0
+offset_right = 44.0
+offset_bottom = -30.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Food: -1"
+horizontal_alignment = 1
+
+[node name="UnitStateManager" type="Node" parent="." unique_id=777459765 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_davkp")
+initial_state = NodePath("QueueingMoves")
+metadata/_custom_type_script = "uid://y021c0k020p6"
+
+[node name="QueueingMoves" type="Node" parent="UnitStateManager" unique_id=2126709481 node_paths=PackedStringArray("unit")]
+script = ExtResource("4_1sk4h")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="Dancing" type="Node" parent="UnitStateManager" unique_id=774773069]
+script = ExtResource("5_baxm0")
+metadata/_custom_type_script = "uid://teapur67yax4"

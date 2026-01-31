@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://iosb2w0fsbmo"]
+
+[ext_resource type="Script" uid="uid://dl1pshdi185jd" path="res://unit_manager.gd" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://bkki4vmw1adyq" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://cbqxk3r4grpp1" path="res://tile_manager.gd" id="4_lquwl"]
+
+[node name="Main" type="Node2D" unique_id=26801442]
+script = ExtResource("1_h2yge")
+
+[node name="UnitManager" type="Node2D" parent="." unique_id=903784924 node_paths=PackedStringArray("tile_manager")]
+script = ExtResource("1_1bvp3")
+tile_manager = NodePath("../TileManager")
+
+[node name="TileManager" type="Node2D" parent="." unique_id=1973299878]
+script = ExtResource("4_lquwl")
+
+[node name="MainControl" type="Control" parent="." unique_id=269909978]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1280.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="FoodDepositedLabel" type="Label" parent="MainControl" unique_id=1680829220]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 32
+text = "Food deposited: 0"
+horizontal_alignment = 2
+
+[node name="StepsQueuedLabel" type="Label" parent="MainControl" unique_id=196199504]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -219.0
+offset_top = 45.0
+offset_bottom = 90.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 32
+text = "Current steps:"
+horizontal_alignment = 2
+
+[connection signal="move_requested" from="UnitManager" to="." method="_on_unit_manager_move_requested"]

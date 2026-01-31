@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cp0viuxr8grah"]
+
+[ext_resource type="Script" uid="uid://fgwpethqpb6p" path="res://tile.gd" id="1_n3f48"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(256, 256)
+
+[node name="Tile" type="Area2D" unique_id=2061724912]
+script = ExtResource("1_n3f48")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1639475733]
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="TileControl" type="Control" parent="." unique_id=1241500938]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FoodAmountLabel" type="Label" parent="TileControl" unique_id=1383112821]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_top = -128.0
+offset_right = 108.0
+offset_bottom = -96.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Food: -1"
+horizontal_alignment = 1
