@@ -30,6 +30,7 @@ func add_step(enactor : Unit, target_tile : Tile, action_name : String):
 
 func play_step(step : Array):
 	print(step[2])
+#	use a switch statement to match name to behavior
 
 
 func _on_unit_manager_move_requested(enactor: Unit, target_tile: Tile, action_name: String) -> void:
