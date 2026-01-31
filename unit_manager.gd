@@ -6,10 +6,6 @@ const UNIT_PATH = preload("res://unit.tscn")
 var current_player_units : Array = []
 var current_npcs : Array = []
 
-var test_players = [
-	1, 2, 3, 4
-]
-
 signal move_requested(enactor : Unit, target_tile : Tile, action_name : String)
 
 func create_player_unit():

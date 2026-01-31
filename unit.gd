@@ -5,11 +5,13 @@ var current_projection : Tile = null
 var current_exploration : Tile = null
 var food_amount : int = 0
 var is_npc : bool = false
+var steps_queued : int = 0
 
 signal request_step(target_tile : Tile, action_name : String)
 signal tile_change_requested(target_coordinate_x : int, target_coordinate_y : int)
 signal starting_dance
 signal unit_turn_started
+signal unit_turn_concluded
 
 func _ready() -> void:
 	add_to_group("Units")

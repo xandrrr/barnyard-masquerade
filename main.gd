@@ -3,12 +3,26 @@ extends Node2D
 var food_deposited_amount : int = 0
 var current_turn : Unit = null
 
-var current_steps : Array = []
+var current_steps : Dictionary = {
+	1 : [],
+	2 : [],
+	3 : []
+}
+var current_players : Array = []
+var current_player_units : Dictionary = {}
+
+var current_turn_index = -1
+var current_player_acting = null
+var test_players = [
+	1, 2, 3, 4
+]
 
 func _ready() -> void:
 	$TileManager.create_map(3, 3)
-	$UnitManager.create_player_unit()
-	update_queued_move_display()
+	for test_player in test_players:
+		current_player_units[test_player] = $UnitManager.create_player_unit()
+		current_players.append(test_player)
+	change_turn()
 
 
 func update_deposited_food_tally():
@@ -18,22 +32,23 @@ func update_deposited_food_tally():
 func play_turn():
 	for unit in $UnitManager.current_player_units:
 		unit.starting_dance.emit()
-	for step in current_steps:
-		play_step(step)
-		await get_tree().create_timer(1.0).timeout
-	current_steps.clear()
-	update_queued_move_display()
+	for i in range(3):
+		for step in current_steps[i + 1]:
+			play_step(step)
+		await get_tree().create_timer(1.5).timeout
+	current_steps[1].clear()
+	current_steps[2].clear()
+	current_steps[3].clear()
 	update_deposited_food_tally()
+	current_turn_index = -1
+	change_turn()
 	for unit in $UnitManager.current_player_units:
 		unit.unit_turn_started.emit()
 
 
 func add_step(enactor : Unit, target_tile : Tile, action_name : String):
 	var turn_elements = [enactor, target_tile, action_name]
-	current_steps.append(turn_elements)
-	update_queued_move_display()
-	if current_steps.size() == 3:
-		play_turn()
+	current_steps[enactor.steps_queued].append(turn_elements)
 
 
 func play_step(step : Array):
@@ -66,16 +81,27 @@ func play_step(step : Array):
 
 
 func _on_unit_manager_move_requested(enactor: Unit, target_tile: Tile, action_name: String) -> void:
+	enactor.steps_queued += 1
+	print(enactor.steps_queued)
 	add_step(enactor, target_tile, action_name)
 	enactor.get_node("ProjectionSprite").global_position = target_tile.position
+	if enactor.steps_queued == 3:
+		change_turn()
 
 
-func update_queued_move_display():
-	if !current_steps.is_empty():
-		var to_append : String = "\n"
-		for step in current_steps:
-			to_append += step[2]
-			to_append += "\n"
-		$MainControl/StepsQueuedLabel.text = "Current steps queued: " + to_append
+func change_turn():
+	current_turn_index += 1
+	if current_player_acting:
+		var previous_unit = current_player_units[current_player_acting]
+		previous_unit.unit_turn_concluded.emit()
+		previous_unit.steps_queued = 0
+	
+	if current_turn_index < current_players.size():
+		current_player_acting = current_players[current_turn_index]
+		var current_unit = current_player_units[current_player_acting]
+		current_unit.steps_queued = 0
+		await get_tree().create_timer(0.05).timeout
+		current_unit.unit_turn_started.emit()
 	else:
-		$MainControl/StepsQueuedLabel.text = "No steps queued"
+		current_player_acting = null
+		play_turn()
