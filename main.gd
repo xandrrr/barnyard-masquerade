@@ -29,6 +29,15 @@ func update_deposited_food_tally():
 	$MainControl/FoodDepositedLabel.text = "Food deposited: " + str(food_deposited_amount)
 
 
+func prepare_new_turn():
+	current_turn_index = -1
+	current_player_acting = null
+	current_steps[1].clear()
+	current_steps[2].clear()
+	current_steps[3].clear()
+	change_turn()
+
+
 func play_turn():
 	for unit in $UnitManager.current_player_units:
 		unit.starting_dance.emit()
@@ -36,14 +45,8 @@ func play_turn():
 		for step in current_steps[i + 1]:
 			play_step(step)
 		await get_tree().create_timer(1.5).timeout
-	current_steps[1].clear()
-	current_steps[2].clear()
-	current_steps[3].clear()
 	update_deposited_food_tally()
-	current_turn_index = -1
-	change_turn()
-	for unit in $UnitManager.current_player_units:
-		unit.unit_turn_started.emit()
+	prepare_new_turn()
 
 
 func add_step(enactor : Unit, target_tile : Tile, action_name : String):
