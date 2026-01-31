@@ -8,6 +8,8 @@ var is_npc : bool = false
 
 signal request_step(target_tile : Tile, action_name : String)
 signal tile_change_requested(target_coordinate_x : int, target_coordinate_y : int)
+signal starting_dance
+signal unit_turn_started
 
 func _ready() -> void:
 	add_to_group("Units")
@@ -19,3 +21,7 @@ func _ready() -> void:
 
 func update_food_tally():
 	$UnitControl/FoodAmountLabel.text = "Food: " + str(food_amount)
+
+
+func cast_projection(tile : Tile):
+	$BodyProjectionSprite.position = tile.position
