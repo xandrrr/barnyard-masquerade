@@ -98,6 +98,31 @@ func _on_confirm_button_pressed() -> void:
 	if selected_player == null:
 		pass
 	else:
+		match selected_player:
+			"Cow":
+				$VBoxContainer/firstRowCont/character1.disabled = true
+			"Chicken":
+				$VBoxContainer/firstRowCont/character2.disabled = true
+			"Horse":
+				$VBoxContainer/firstRowCont/character3.disabled = true
+			"Goat":
+				$VBoxContainer/firstRowCont/character4.disabled = true
+			"Sheep":
+				$VBoxContainer/firstRowCont/character5.disabled = true
+			"Donkey":
+				$VBoxContainer/firstRowCont/character6.disabled = true
+			"Dog":
+				$VBoxContainer/secondRowCont/character7.disabled = true
+			"Cat":
+				$VBoxContainer/secondRowCont/character8.disabled = true
+			"Llama":
+				$VBoxContainer/secondRowCont/character9.disabled = true
+			"Raccoon":
+				$VBoxContainer/secondRowCont/character10.disabled = true
+			"Groundhog":
+				$VBoxContainer/secondRowCont/character11.disabled = true
+			"Badger":
+				$VBoxContainer/secondRowCont/character12.disabled = true
 		player_selection.append(selected_player)
 		count += 1
 		if count == 5:
