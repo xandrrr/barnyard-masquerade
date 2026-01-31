@@ -12,7 +12,15 @@ size = Vector2(25, 25)
 [node name="Unit" type="CharacterBody2D" unique_id=679955636]
 script = ExtResource("1_ctwoc")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=705627928]
+[node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]
+visible = false
+texture = ExtResource("2_davkp")
+
+[node name="ProjectionSprite" type="Sprite2D" parent="." unique_id=596376524]
+modulate = Color(1, 1, 1, 0.5019608)
+texture = ExtResource("2_davkp")
+
+[node name="ExplorationSprite" type="Sprite2D" parent="." unique_id=1554168662]
 texture = ExtResource("2_davkp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=145315928]
@@ -38,8 +46,9 @@ theme_override_font_sizes/font_size = 24
 text = "Food: -1"
 horizontal_alignment = 1
 
-[node name="UnitStateManager" type="Node" parent="." unique_id=777459765 node_paths=PackedStringArray("initial_state")]
+[node name="UnitStateManager" type="Node" parent="." unique_id=777459765 node_paths=PackedStringArray("unit", "initial_state")]
 script = ExtResource("3_davkp")
+unit = NodePath("..")
 initial_state = NodePath("QueueingMoves")
 metadata/_custom_type_script = "uid://y021c0k020p6"
 

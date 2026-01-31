@@ -2,6 +2,20 @@ extends State
 
 @export var unit : Unit
 
+func enter(previous_state_path: String, data := {}) -> void:
+	unit.get_node("ProjectionSprite").visible = true
+	unit.get_node("ExplorationSprite").visible = true
+	unit.get_node("UnitSprite").visible = false
+	
+	unit.get_node("ProjectionSprite").position = Vector2(0,0)
+	unit.get_node("ExplorationSprite").position = Vector2(0,0)
+
+func exit() -> void:
+	unit.get_node("UnitSprite").visible = true
+	unit.get_node("ProjectionSprite").visible = false
+	unit.get_node("ExplorationSprite").visible = false
+
+
 func physics_update(_delta: float) -> void:
 	if Input.is_action_just_pressed("move_up"):
 		var target_coordinate_x = unit.current_projection.x_coordinate
@@ -43,7 +57,7 @@ func check_if_legal_tile(target_coordinate_x : int, target_coordinate_y : int):
 	var distance_y = current_unit_projection.y_coordinate - target_coordinate_y
 	
 	var vector_representation = Vector2(distance_x, distance_y)
-	if vector_representation.length() == 1 or vector_representation.length() == 0:
+	if vector_representation.length() == 1:
 		return true
 	else:
 		return false
