@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://p35e0b2cnybw"]
+
+[ext_resource type="Script" uid="uid://b675txx841ply" path="res://starter_menu.gd" id="1_n1bph"]
+
+[node name="StarterMenu" type="Control" unique_id=2135858070]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n1bph")
+
+[node name="Label" type="Label" parent="." unique_id=664525992]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 147.0
+offset_right = 1033.0
+offset_bottom = 208.0
+theme_override_font_sizes/font_size = 44
+text = "Barnyard Masqerade (placeholder)"
+
+[node name="Button" type="Button" parent="." unique_id=1467304258]
+layout_mode = 0
+offset_left = 577.0
+offset_top = 351.0
+offset_right = 671.0
+offset_bottom = 418.0
+theme_override_font_sizes/font_size = 43
+text = "Play"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
