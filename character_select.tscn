@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://b5lhopk441v7h"]
+
+[ext_resource type="Script" uid="uid://bg7x76whplvdi" path="res://character_select.gd" id="1_tddig"]
+
+[node name="CharacterSelect" type="Control" unique_id=820972875]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tddig")
+
+[node name="ImpostLabel" type="Label" parent="." unique_id=664282614]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 44.0
+offset_right = 545.0
+offset_bottom = 86.0
+theme_override_font_sizes/font_size = 30
+text = "Imposters: choose your character!"
+
+[node name="copLabel" type="Label" parent="." unique_id=797590906]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 97.0
+offset_right = 298.0
+offset_bottom = 139.0
+theme_override_font_sizes/font_size = 30
+text = "Cops: look away!"
+
+[node name="playerNumLabel2" type="Label" parent="." unique_id=499032539]
+layout_mode = 0
+offset_left = 881.0
+offset_top = 48.0
+offset_right = 1013.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 30
+text = "Player x: "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=267025403]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 165.0
+offset_right = 1222.0
+offset_bottom = 583.0
+
+[node name="firstRowCont" type="HBoxContainer" parent="VBoxContainer" unique_id=1060895891]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="character1" type="Button" parent="VBoxContainer/firstRowCont" unique_id=93805888]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "1"
+
+[node name="character2" type="Button" parent="VBoxContainer/firstRowCont" unique_id=1502215288]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "2"
+
+[node name="character3" type="Button" parent="VBoxContainer/firstRowCont" unique_id=783397339]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "3"
+
+[node name="character4" type="Button" parent="VBoxContainer/firstRowCont" unique_id=1156558947]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "4"
+
+[node name="character5" type="Button" parent="VBoxContainer/firstRowCont" unique_id=1037142066]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "5"
+
+[node name="character6" type="Button" parent="VBoxContainer/firstRowCont" unique_id=2144877570]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "6"
+
+[node name="secondRowCont" type="HBoxContainer" parent="VBoxContainer" unique_id=166822115]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="character7" type="Button" parent="VBoxContainer/secondRowCont" unique_id=953744170]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "1"
+
+[node name="character8" type="Button" parent="VBoxContainer/secondRowCont" unique_id=1506174]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "2"
+
+[node name="character9" type="Button" parent="VBoxContainer/secondRowCont" unique_id=847220606]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "3"
+
+[node name="character10" type="Button" parent="VBoxContainer/secondRowCont" unique_id=916933084]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "4"
+
+[node name="character11" type="Button" parent="VBoxContainer/secondRowCont" unique_id=2125800496]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "5"
+
+[node name="character12" type="Button" parent="VBoxContainer/secondRowCont" unique_id=1251229276]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "6"
+
+[node name="confirmButton" type="Button" parent="." unique_id=610486509]
+layout_mode = 0
+offset_left = 1066.0
+offset_top = 639.0
+offset_right = 1191.0
+offset_bottom = 689.0
+theme_override_font_sizes/font_size = 30
+text = "Confirm"
+
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character1" to="." method="_on_character_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character2" to="." method="_on_character_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character3" to="." method="_on_character_3_pressed"]
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character4" to="." method="_on_character_4_pressed"]
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character5" to="." method="_on_character_5_pressed"]
+[connection signal="pressed" from="VBoxContainer/firstRowCont/character6" to="." method="_on_character_6_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character7" to="." method="_on_character_7_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character8" to="." method="_on_character_8_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character9" to="." method="_on_character_9_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character10" to="." method="_on_character_10_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character11" to="." method="_on_character_11_pressed"]
+[connection signal="pressed" from="VBoxContainer/secondRowCont/character12" to="." method="_on_character_12_pressed"]
+[connection signal="pressed" from="confirmButton" to="." method="_on_confirm_button_pressed"]
