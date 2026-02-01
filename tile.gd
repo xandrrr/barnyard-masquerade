@@ -16,6 +16,9 @@ func take_unit(unit : Unit):
 	unit.current_exploration = self
 
 
+func take_npc(npc : Npc):
+	npc.current_tile = self
+
 func distribute_food(unit : Unit, amount : int):
 	var food_taken = min(food_amount, amount)
 	food_amount -= food_taken

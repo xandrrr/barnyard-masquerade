@@ -10,6 +10,7 @@ var current_steps : Dictionary = {
 }
 var current_players : Array = []
 var current_player_units : Dictionary = {}
+var current_npcs : Array = []
 
 var current_turn_index = -1
 var current_player_acting = null
@@ -22,6 +23,9 @@ func _ready() -> void:
 	for test_player in test_players:
 		current_player_units[test_player] = $UnitManager.create_player_unit()
 		current_players.append(test_player)
+	for i in range(8):
+		var npc = $UnitManager.create_npc()
+		current_npcs.append(npc)
 	change_turn()
 
 
@@ -44,6 +48,7 @@ func play_turn():
 	for i in range(3):
 		for step in current_steps[i + 1]:
 			play_step(step)
+		$UnitManager.move_all_npcs()
 		await get_tree().create_timer(1.5).timeout
 	update_deposited_food_tally()
 	prepare_new_turn()

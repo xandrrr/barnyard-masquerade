@@ -3,6 +3,7 @@ class_name UnitManager extends Node2D
 @export var tile_manager : TileManager
 
 const UNIT_PATH = preload("res://unit.tscn")
+const NPC_PATH = preload("res://npc.tscn")
 var current_player_units : Array = []
 var current_npcs : Array = []
 
@@ -29,4 +30,30 @@ func create_player_unit():
 	)
 	
 	return new_unit
+
+
+func create_npc():
+	var new_unit = NPC_PATH.instantiate()
+	add_child(new_unit)
+	current_npcs.append(new_unit)
 	
+	var tile = tile_manager.get_tile_from_coordinates(1, 1)
+	new_unit.current_tile = tile
+	tile.take_npc(new_unit)
+	new_unit.position = tile.position
+	
+	return new_unit
+
+
+func move_npc(npc : Npc):
+	var adjacent_tiles = tile_manager.get_adjacent_tiles(npc.current_tile)
+	var random_tile_index = randi_range(0, (adjacent_tiles.size() - 1))
+	var random_tile = adjacent_tiles[random_tile_index]
+	random_tile.take_npc(npc)
+	var tween = get_tree().create_tween()
+	tween.tween_property(npc, "position", random_tile.position, 1.0)
+
+
+func move_all_npcs():
+	for npc in current_npcs:
+		move_npc(npc)
