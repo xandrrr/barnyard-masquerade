@@ -4,6 +4,67 @@
 [ext_resource type="Script" uid="uid://bkki4vmw1adyq" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://cbqxk3r4grpp1" path="res://tile_manager.gd" id="4_lquwl"]
 
+[sub_resource type="Animation" id="Animation_h2yge"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5061455]
+}
+
+[sub_resource type="Animation" id="Animation_1bvp3"]
+resource_name = "fade_animator"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.5, 3),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [-0.5061454830783556, 0.5061455, 0.5061455, 1.5707963267948966]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lquwl"]
+_data = {
+&"RESET": SubResource("Animation_h2yge"),
+&"fade_animator": SubResource("Animation_1bvp3")
+}
+
 [node name="Main" type="Node2D" unique_id=26801442]
 script = ExtResource("1_h2yge")
 
@@ -19,7 +80,7 @@ layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
 offset_right = 1280.0
-offset_bottom = 80.0
+offset_bottom = 720.0
 grow_horizontal = 2
 
 [node name="FoodDepositedLabel" type="Label" parent="MainControl" unique_id=1680829220]
@@ -34,7 +95,7 @@ theme_override_font_sizes/font_size = 32
 text = "Food deposited: 0"
 horizontal_alignment = 2
 
-[node name="StepsQueuedLabel" type="Label" parent="MainControl" unique_id=196199504]
+[node name="InformationLabel" type="Label" parent="MainControl" unique_id=196199504]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -44,7 +105,33 @@ offset_top = 45.0
 offset_bottom = 90.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 32
-text = "Current steps:"
+text = "Current Player: 
+You have ? food.
+Steps remaining: "
 horizontal_alignment = 2
 
+[node name="PhasePanel" type="PanelContainer" parent="MainControl" unique_id=221575074]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_top = -50.0
+offset_right = 1525.0049
+offset_bottom = 50.001022
+rotation = 0.5061455
+
+[node name="CenterContainer" type="CenterContainer" parent="MainControl/PhasePanel" unique_id=949231181]
+layout_mode = 2
+
+[node name="PhaseLabel" type="Label" parent="MainControl/PhasePanel/CenterContainer" unique_id=1624846789]
+layout_mode = 2
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 64
+text = "Results"
+
+[node name="PhaseAnimator" type="AnimationPlayer" parent="." unique_id=1974561950]
+root_node = NodePath("../MainControl/PhasePanel")
+libraries/ = SubResource("AnimationLibrary_lquwl")
+
+[connection signal="cop_action_decided" from="UnitManager" to="." method="_on_unit_manager_cop_action_decided"]
+[connection signal="cop_move_requested" from="UnitManager" to="." method="_on_unit_manager_cop_move_requested"]
+[connection signal="cop_room_decision" from="UnitManager" to="." method="_on_unit_manager_cop_room_decision"]
 [connection signal="move_requested" from="UnitManager" to="." method="_on_unit_manager_move_requested"]

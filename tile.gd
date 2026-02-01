@@ -16,14 +16,19 @@ func take_unit(unit : Unit):
 	unit.current_exploration = self
 
 
+func take_cop(cop : Cop):
+	cop.position = self.position
+	cop.current_exploration = self
+
+
 func take_npc(npc : Npc):
 	npc.current_tile = self
+
 
 func distribute_food(unit : Unit, amount : int):
 	var food_taken = min(food_amount, amount)
 	food_amount -= food_taken
 	unit.food_amount += food_taken
-	update_food_tally()
 
 
 func update_food_tally():
@@ -32,4 +37,8 @@ func update_food_tally():
 
 func add_food(amount : int):
 	food_amount += amount
-	update_food_tally()
+
+
+func remove_food(amount : int):
+	var food_removed = min(food_amount, amount)
+	food_amount -= food_removed

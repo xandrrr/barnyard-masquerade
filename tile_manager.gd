@@ -39,11 +39,7 @@ func get_adjacent_tiles(target_tile : Tile):
 		
 		if abs(difference_x) == 1 and difference_y == 0:
 			adjacent_tiles.append(tile)
-			print(target_tile.x_coordinate, target_tile.y_coordinate,tile.x_coordinate,tile.y_coordinate)
-			print(difference_x, difference_y)
 		elif abs(difference_y) == 1 and difference_x == 0:
 			adjacent_tiles.append(tile)
-			print(target_tile.x_coordinate, target_tile.y_coordinate,tile.x_coordinate,tile.y_coordinate)
-			print(difference_x, difference_y)
 	
 	return adjacent_tiles
