@@ -2,6 +2,8 @@ extends Node2D
 
 var food_deposited_amount : int = 0
 var current_turn : Unit = null
+var total_animals : Array = []
+var animal_file_array : Array = []
 
 var current_steps : Dictionary = {
 	1 : [],
@@ -30,11 +32,18 @@ func _ready() -> void:
 	
 	var player_select = await $CharacterSelect.playerSelect
 	print(player_select)
+	#cow, chicken, horse, goat, sheep, dog, cat, raccoon, donkey
+	specificAnimalFile = iterate_for_animal_info(player_select)
 	var player_dictionary = {
-		player_select[0]: 1,
-		player_select[1]: 2,
-		player_select[2]: 3
+		1 : specificAnimalFile[0],
+		2 :specificAnimalFile[1],
+		3 : specificAnimalFile[2]
 	}
+	#
+	total_animals = [""]
+	#maybe to total animal dictionary, then based on incoming array, get the values associated with 
+	#each animal and put to player?
+	#then switch statement to match ids to information, no wait. why
 	#do things with char select
 	#{array[0]: 1, array[1]: 2, array[2]: 3, array[3]: 4}
 	$TileManager.create_map(3, 3)
@@ -48,7 +57,36 @@ func _ready() -> void:
 	for tile in $TileManager.tiles:
 		tile.update_food_tally()
 	change_turn()
+	
+func iterate_for_animal_info(player_select):
+	for i in range(player_select):
+		var specificAnimalFile = find_info_related_to_animal(player_select)
+		animalFileArray += specificAnimalFile
+	return specificAnimalFile
 
+func find_info_related_to_animal(player_select):
+	for player in player_select:
+		if player == "Cow":
+			#assign files cow
+		elif player == "Chicken":
+			#load the files
+		elif player == "Horse":
+			#load the files
+		elif player == "Goat":
+			#load the files
+		elif player == "Sheep":
+			#load the files
+		elif player == "Dog":
+			#load the files
+		elif player == "Cat":
+			#load the files
+		elif player == "Raccoon":
+			#load the files
+		elif player == "Donkey":
+			#load the files
+		else:
+			pass
+		return specific_files
 
 func update_deposited_food_tally():
 	$MainControl/InformationVBox/FoodDepositedLabel.text = "Food deposited: " + str(food_deposited_amount)

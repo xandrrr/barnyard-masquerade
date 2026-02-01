@@ -85,7 +85,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
-"values": [0.5061454830783556, 1.8325957145940461]
+"values": [0.5061454830783556, 1.832595714594046]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lquwl"]
@@ -244,7 +244,6 @@ theme_override_font_sizes/font_size = 24
 text = "Available Actions:"
 horizontal_alignment = 2
 
-[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [node name="PhasePanel" type="PanelContainer" parent="MainControl" unique_id=221575074]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
@@ -282,6 +281,7 @@ horizontal_alignment = 2
 root_node = NodePath("../MainControl/PhasePanel")
 libraries/ = SubResource("AnimationLibrary_lquwl")
 
+[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [node name="CopChooseRoomAnimator" type="AnimationPlayer" parent="." unique_id=383210231]
 libraries/ = SubResource("AnimationLibrary_kek77")
 
