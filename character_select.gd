@@ -13,6 +13,7 @@ signal playerSelect
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	get_node("../MainControl").visible = false
 	pass # Replace with function body.
 
 
@@ -25,75 +26,56 @@ func _process(delta: float) -> void:
 
 func _on_character_1_pressed() -> void:
 	selected_player = "Cow"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_2_pressed() -> void:
 	selected_player = "Chicken"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_3_pressed() -> void:
 	selected_player = "Horse"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_4_pressed() -> void:
 	selected_player = "Goat"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_5_pressed() -> void:
 	selected_player = "Sheep"
-	player_label.text = "Player:  " + selected_player
-	pass # Replace with function body.
-
-
-func _on_character_6_pressed() -> void:
-	selected_player = "Donkey"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_7_pressed() -> void:
 	selected_player = "Dog"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_8_pressed() -> void:
 	selected_player = "Cat"
-	player_label.text = "Player:  " + selected_player
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_9_pressed() -> void:
-	selected_player = "Llama"
-	player_label.text = "Player:  " + selected_player
+	selected_player = "Racoon"
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
 
 func _on_character_10_pressed() -> void:
-	selected_player = "Racoon"
-	player_label.text = "Player:  " + selected_player
+	selected_player = "Donkey"
+	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body
-
-
-func _on_character_11_pressed() -> void:
-	selected_player = "Groundhog"
-	player_label.text = "Player:  " + selected_player
-	pass # Replace with function body.
-
-
-func _on_character_12_pressed() -> void:
-	selected_player = "Badger"
-	player_label.text = "Player:  " + selected_player
-	pass # Replace with function body.
-
 
 func _on_confirm_button_pressed() -> void:
 	#for each character, assign a place in array to pass on to turn functionality
@@ -111,28 +93,24 @@ func _on_confirm_button_pressed() -> void:
 				$VBoxContainer/firstRowCont/character4.disabled = true
 			"Sheep":
 				$VBoxContainer/firstRowCont/character5.disabled = true
-			"Donkey":
-				$VBoxContainer/firstRowCont/character6.disabled = true
 			"Dog":
 				$VBoxContainer/secondRowCont/character7.disabled = true
 			"Cat":
 				$VBoxContainer/secondRowCont/character8.disabled = true
-			"Llama":
+			"Racoon":
 				$VBoxContainer/secondRowCont/character9.disabled = true
-			"Raccoon":
+			"Donkey":
 				$VBoxContainer/secondRowCont/character10.disabled = true
-			"Groundhog":
-				$VBoxContainer/secondRowCont/character11.disabled = true
-			"Badger":
-				$VBoxContainer/secondRowCont/character12.disabled = true
+				
 		player_selection.append(selected_player)
 		count += 1
 		if count == 3:
 			#print(player_selection)
-			print(self.visible)
+			#print(self.visible)
 			
 			self.visible = false
-			print(self.visible)
+			get_node("../MainControl").visible = true
+			#print(self.visible)
 			playerSelect.emit(player_selection)
 			#toggle visabilites
 			#visible = false

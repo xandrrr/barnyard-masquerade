@@ -85,7 +85,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
-"values": [0.5061454830783556, 1.8325957145940461]
+"values": [0.5061454830783556, 1.832595714594046]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lquwl"]
@@ -142,7 +142,6 @@ You have ? food.
 Steps remaining: "
 horizontal_alignment = 2
 
-[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [node name="PhasePanel" type="PanelContainer" parent="MainControl" unique_id=221575074]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
@@ -164,6 +163,7 @@ text = "Results"
 root_node = NodePath("../MainControl/PhasePanel")
 libraries/ = SubResource("AnimationLibrary_lquwl")
 
+[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [connection signal="cop_action_decided" from="UnitManager" to="." method="_on_unit_manager_cop_action_decided"]
 [connection signal="cop_move_requested" from="UnitManager" to="." method="_on_unit_manager_cop_move_requested"]
 [connection signal="cop_room_decision" from="UnitManager" to="." method="_on_unit_manager_cop_room_decision"]
