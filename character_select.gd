@@ -127,7 +127,7 @@ func _on_confirm_button_pressed() -> void:
 				$VBoxContainer/secondRowCont/character12.disabled = true
 		player_selection.append(selected_player)
 		count += 1
-		if count == 5:
+		if count == 3:
 			#print(player_selection)
 			print(self.visible)
 			
