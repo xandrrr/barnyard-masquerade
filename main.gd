@@ -36,22 +36,21 @@ func _ready() -> void:
 	
 	await $CharacterSelect.playerSelect
 	
+	var sprite_types = ["UnitSprite", "ProjectionSprite", "ExplorationSprite"]
 	$TileManager.create_map(3, 3)
 	for player in $CharacterSelect.player_selections.keys():
 		var new_unit = $UnitManager.create_player_unit()
 		new_unit.character_name = $CharacterSelect.player_selections[player]
-		new_unit.character_texture = load("res://test_icon.png")
+		new_unit.character_texture = look_up_character_sprite(new_unit.character_name)
 		current_player_units[player] = new_unit
 		current_players.append(player)
-		
 		character_dictionary[new_unit.character_name] = true
 	
 	for character in character_dictionary.keys():
 		if character_dictionary[character] == false:
 			var npc = $UnitManager.create_npc()
 			npc.character_name = character
-			npc.character_texture = load("res://test_icon.png")
-			current_npcs.append(npc)
+			npc.character_texture = look_up_character_sprite(npc.character_name)
 		
 	current_cop = $UnitManager.create_cop()
 	for tile in $TileManager.tiles:
@@ -61,7 +60,7 @@ func _ready() -> void:
 	
 	for character in character_dictionary.keys():
 		var new_texture_rect = TextureRect.new()
-		new_texture_rect.texture = load("res://test_icon.png")
+		new_texture_rect.texture = look_up_character_sprite(character)
 		new_texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		new_texture_rect.custom_minimum_size = Vector2(64,64)
 		new_texture_rect.name = character
@@ -426,3 +425,10 @@ func _on_unit_manager_cop_action_decided(action_name: String) -> void:
 		await current_cop.action_finished
 	await get_tree().create_timer(0.05).timeout
 	display_board()
+
+
+func look_up_character_sprite(character_name : String):
+	const PATH_TO_SPRITES = "res://sprites/CharacterSprites/"
+	var path_to_character_sprite = PATH_TO_SPRITES + character_name + ".png"
+	var character_sprite = load(path_to_character_sprite)
+	return character_sprite

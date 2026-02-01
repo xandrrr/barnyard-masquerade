@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b5rmwb1pmook"]
 
 [ext_resource type="Script" uid="uid://dmy2uqy3nkvvl" path="res://unit.gd" id="1_ctwoc"]
-[ext_resource type="Texture2D" uid="uid://cu5glesidtteb" path="res://icon.svg" id="2_davkp"]
+[ext_resource type="Texture2D" uid="uid://c7uyk36vcbot5" path="res://sprites/CharacterSprites/Mask.png" id="2_of1k5"]
 [ext_resource type="Script" uid="uid://wsl25dg622bc" path="res://unit_state_manager.gd" id="3_davkp"]
 [ext_resource type="Script" uid="uid://dk2duril0hxvk" path="res://queueing_moves.gd" id="4_1sk4h"]
 [ext_resource type="Script" uid="uid://bqciqppemdnfb" path="res://dancing.gd" id="5_baxm0"]
@@ -11,20 +11,26 @@
 size = Vector2(25, 25)
 
 [node name="Unit" type="CharacterBody2D" unique_id=679955636]
-scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ctwoc")
-public_texture = ExtResource("2_davkp")
+public_texture = ExtResource("2_of1k5")
 
 [node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]
-visible = false
-texture = ExtResource("2_davkp")
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_of1k5")
 
 [node name="ProjectionSprite" type="Sprite2D" parent="." unique_id=596376524]
+visible = false
 modulate = Color(1, 1, 1, 0.5019608)
-texture = ExtResource("2_davkp")
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_of1k5")
 
 [node name="ExplorationSprite" type="Sprite2D" parent="." unique_id=1554168662]
-texture = ExtResource("2_davkp")
+visible = false
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_of1k5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=145315928]
 shape = SubResource("RectangleShape2D_lquwl")
