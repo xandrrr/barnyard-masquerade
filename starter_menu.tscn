@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b675txx841ply" path="res://starter_menu.gd" id="1_n1bph"]
 [ext_resource type="Texture2D" uid="uid://1vljnbm32rtb" path="res://sprites/image-1.png.png" id="2_qbbcb"]
 [ext_resource type="FontFile" uid="uid://cjvh0fllrue8t" path="res://fonts/Masquerade.ttf" id="2_thjnl"]
+[ext_resource type="Texture2D" uid="uid://nhlcndm40kna" path="res://sprites/Animals.png" id="4_3tlw5"]
 
 [sub_resource type="Theme" id="Theme_qbbcb"]
 
@@ -25,31 +26,30 @@ metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="." unique_id=664525992]
 layout_mode = 0
-offset_left = 719.0
-offset_top = 444.0
-offset_right = 1101.0
-offset_bottom = 585.0
+offset_left = 715.0
+offset_top = 451.0
+offset_right = 1097.0
+offset_bottom = 613.0
 theme_override_colors/font_color = Color(0.9779369, 0.97793704, 0.9779369, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_thjnl")
 theme_override_font_sizes/font_size = 42
-text = "Barnyard 
-Masquerade "
+text = "Barnyard Masquerade "
+autowrap_mode = 2
 
-[node name="Button" type="Button" parent="." unique_id=1467304258]
+[node name="playButton" type="Button" parent="." unique_id=1467304258]
 layout_mode = 0
 offset_left = 179.0
 offset_top = 378.0
 offset_right = 303.0
 offset_bottom = 445.0
 theme = SubResource("Theme_qbbcb")
-theme_type_variation = &"FlatButton"
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_thjnl")
 theme_override_font_sizes/font_size = 42
 text = "Play"
 
-[node name="Button2" type="Button" parent="." unique_id=1436055619]
+[node name="rulesButton" type="Button" parent="." unique_id=1436055619]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 460.0
@@ -62,5 +62,12 @@ text = "Rules
 &
 Roles"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_pressed"]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1155408254]
+position = Vector2(629, 187)
+scale = Vector2(4.0625, 4.0625)
+texture = ExtResource("4_3tlw5")
+hframes = 3
+vframes = 3
+
+[connection signal="pressed" from="playButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="rulesButton" to="." method="_on_rules_button_pressed"]

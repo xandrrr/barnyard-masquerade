@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://p27dlwmnyk2t"]
+
+[ext_resource type="Script" uid="uid://wvgf7hx2nc1i" path="res://rules_and_roles.gd" id="1_lojif"]
+[ext_resource type="Texture2D" uid="uid://b36hu1wlbjbjb" path="res://sprites/barnMenu.png" id="2_wipdd"]
+[ext_resource type="FontFile" uid="uid://cjvh0fllrue8t" path="res://fonts/Masquerade.ttf" id="3_xo1so"]
+
+[node name="RulesAndRoles" type="Control" unique_id=1792560862]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lojif")
+
+[node name="BarnMenu" type="Sprite2D" parent="." unique_id=221434205]
+position = Vector2(-402, -51)
+scale = Vector2(23.786613, 23.786613)
+texture = ExtResource("2_wipdd")
+
+[node name="ruleCardOne" type="Button" parent="." unique_id=556148451]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 96.0
+offset_right = 498.0
+offset_bottom = 726.0
+text = "Grab 4 of your friends to engage in theft and dance! 3 robbers will try to steal and deposit food around a dance floor - as a cop investigates. Plan your moves wisely: if a cop uncovers a player, they are suspect to conviction. If the robbers deposit 45 pieces of food, the gang has successfully heist-ed the Masquerade! If all of the robbers are identified, the cop wins!
+
+
+
+Click to flip*
+"
+autowrap_mode = 3
+
+[node name="rulesLabel" type="Label" parent="." unique_id=36178181]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 191.0
+offset_right = 366.0
+offset_bottom = 238.0
+theme_override_fonts/font = ExtResource("3_xo1so")
+theme_override_font_sizes/font_size = 38
+text = "Rules"
+
+[node name="ruleCardTwo" type="Button" parent="." unique_id=1196891559]
+visible = false
+layout_mode = 0
+offset_left = 103.0
+offset_top = 96.0
+offset_right = 498.0
+offset_bottom = 726.0
+text = "Robbers will first coordinate their  moves through each programming their three steps. Robbers can either collect food on spaces, or deposit food at the bottom-left and top-right corners. 
+Then, police will pre program their moves, without knowledge of where the robbers  went.
+After which, the turns will progress through each step of all players, allowing the  cop to stop on any of the tiles planned to perform an action.
+This loop will continue until either robbers or the cop wins!
+
+
+
+Click to flip*
+"
+autowrap_mode = 3
+
+[node name="turnsLabel" type="Label" parent="." unique_id=1328072078]
+visible = false
+layout_mode = 0
+offset_left = 240.0
+offset_top = 191.0
+offset_right = 366.0
+offset_bottom = 238.0
+theme_override_fonts/font = ExtResource("3_xo1so")
+theme_override_font_sizes/font_size = 38
+text = "Cont."
+
+[node name="rolesCardOne" type="Button" parent="." unique_id=1282253247]
+visible = false
+layout_mode = 0
+offset_left = 598.0
+offset_top = 96.0
+offset_right = 993.0
+offset_bottom = 726.0
+text = "Evade the cop! Blend in with the npcs! As robbers, it is your duty to collect 45 pieces of food - before the cop can inspect and eliminate your brigade. Deposits are made at the bottom left and top right corners. 
+.
+.
+.
+.
+Controls: 
+Move - Joystick
+Y (Left) - Collect
+				B (Btm) - Blend in (Do nothing)
+				X (Top) - Deposit
+
+"
+autowrap_mode = 3
+
+[node name="rolesLabel" type="Label" parent="." unique_id=993605910]
+visible = false
+layout_mode = 0
+offset_left = 711.0
+offset_top = 184.0
+offset_right = 893.0
+offset_bottom = 231.0
+theme_override_fonts/font = ExtResource("3_xo1so")
+theme_override_font_sizes/font_size = 38
+text = "Robbers"
+
+[node name="rolesCardTwo" type="Button" parent="." unique_id=1519969131]
+layout_mode = 0
+offset_left = 597.0
+offset_top = 96.0
+offset_right = 992.0
+offset_bottom = 726.0
+text = "As a cop - your goal is to find the identities of the three robbers. Inspect npcs and robbers to help track suspects across the dance floor. Once a dancer has been inspected, its mask removed, they are then open to being convicted. Convict all of the robbers to win. 
+.
+.
+Controls:
+Joystick - Move
+A (Right) - Choose tile to Surveil,  Confirm Inspection/Conviction
+Y (Left) - Destroy 2 food on tile
+	Left Trigger - Inspect Dancer's identity
+	Right Trigger - Convict revealed Dancer
+
+
+
+
+Click to flip*
+"
+autowrap_mode = 3
+
+[node name="moreRolesLabel" type="Label" parent="." unique_id=324636272]
+layout_mode = 0
+offset_left = 752.0
+offset_top = 167.0
+offset_right = 834.0
+offset_bottom = 214.0
+theme_override_fonts/font = ExtResource("3_xo1so")
+theme_override_font_sizes/font_size = 38
+text = "Cop	"
+
+[node name="backButton" type="Button" parent="." unique_id=2048417043]
+layout_mode = 0
+offset_left = 1068.0
+offset_top = 25.0
+offset_right = 1193.0
+offset_bottom = 150.0
+theme_override_fonts/font = ExtResource("3_xo1so")
+theme_override_font_sizes/font_size = 42
+text = "Menu"
+
+[connection signal="pressed" from="ruleCardOne" to="." method="_on_rule_card_one_pressed"]
+[connection signal="pressed" from="ruleCardTwo" to="." method="_on_rule_card_two_pressed"]
+[connection signal="pressed" from="rolesCardOne" to="." method="_on_roles_card_one_pressed"]
+[connection signal="pressed" from="rolesCardTwo" to="." method="_on_roles_card_two_pressed"]
+[connection signal="pressed" from="backButton" to="." method="_on_back_button_pressed"]
