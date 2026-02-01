@@ -29,3 +29,17 @@ func get_tile_from_coordinates(x_coordinate : int, y_coordinate : int):
 	for tile in tiles:
 		if tile.x_coordinate == x_coordinate and tile.y_coordinate == y_coordinate:
 			return tile
+
+
+func get_adjacent_tiles(target_tile : Tile):
+	var adjacent_tiles = []
+	for tile in tiles:
+		var difference_x = target_tile.x_coordinate - tile.x_coordinate
+		var difference_y = target_tile.y_coordinate - tile.y_coordinate
+		
+		if abs(difference_x) == 1 and difference_y == 0:
+			adjacent_tiles.append(tile)
+		elif abs(difference_y) == 1 and difference_x == 0:
+			adjacent_tiles.append(tile)
+	
+	return adjacent_tiles

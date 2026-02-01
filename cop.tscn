@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://byq3qgiolmx35"]
+
+[ext_resource type="Script" uid="uid://dvmrbdl7fa611" path="res://cop.gd" id="1_0qtrv"]
+[ext_resource type="Texture2D" uid="uid://dl1oe3qcbwlmn" path="res://sprites/copIcon.png" id="2_0qtrv"]
+[ext_resource type="Script" uid="uid://c3jv43vfh3o80" path="res://cop_state_manager.gd" id="3_10vfs"]
+[ext_resource type="Texture2D" uid="uid://on3g8u3rknif" path="res://sprites/reticle.png" id="3_d0aqw"]
+[ext_resource type="Script" uid="uid://bqciqppemdnfb" path="res://dancing.gd" id="5_pvkf1"]
+[ext_resource type="Script" uid="uid://boflh0uwcxd7h" path="res://queueing_cop_movement.gd" id="6_10vfs"]
+[ext_resource type="Script" uid="uid://dm57whrhey4cd" path="res://waiting.gd" id="6_h0nw5"]
+[ext_resource type="Script" uid="uid://o30ldsbo2uo5" path="res://targeting_player.gd" id="7_xwtm4"]
+[ext_resource type="Script" uid="uid://bf1mdggk3os35" path="res://AwaitingConfirmation.gd" id="8_pvkf1"]
+[ext_resource type="Script" uid="uid://cu5snc75qa66p" path="res://awaiting_action.gd" id="9_h0nw5"]
+[ext_resource type="Script" uid="uid://cv8loe2ag2ano" path="res://directing.gd" id="10_8su2l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(25, 25)
+
+[node name="Cop" type="CharacterBody2D" unique_id=679955636]
+texture_filter = 2
+scale = Vector2(2, 2)
+script = ExtResource("1_0qtrv")
+
+[node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]
+visible = false
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_0qtrv")
+
+[node name="ProjectionSprite" type="Sprite2D" parent="." unique_id=1043573600]
+modulate = Color(1, 1, 1, 0.5019608)
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_0qtrv")
+
+[node name="ExplorationSprite" type="Sprite2D" parent="." unique_id=1941978201]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_0qtrv")
+
+[node name="ReticleSprite" type="Sprite2D" parent="." unique_id=1816673260]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_d0aqw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=145315928]
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CopStateManager" type="Node" parent="." unique_id=1776895716 node_paths=PackedStringArray("unit", "initial_state")]
+script = ExtResource("3_10vfs")
+unit = NodePath("..")
+initial_state = NodePath("Waiting")
+metadata/_custom_type_script = "uid://y021c0k020p6"
+
+[node name="Surveilling" type="Node" parent="CopStateManager" unique_id=301522838]
+script = ExtResource("5_pvkf1")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="Waiting" type="Node" parent="CopStateManager" unique_id=937280149]
+script = ExtResource("6_h0nw5")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="QueueingCopMovement" type="Node" parent="CopStateManager" unique_id=1648766902 node_paths=PackedStringArray("unit")]
+script = ExtResource("6_10vfs")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="TargetingPlayer" type="Node" parent="CopStateManager" unique_id=642033270 node_paths=PackedStringArray("unit")]
+script = ExtResource("7_xwtm4")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="AwaitingConfirmation" type="Node" parent="CopStateManager" unique_id=1989269184 node_paths=PackedStringArray("unit")]
+script = ExtResource("8_pvkf1")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="AwaitingAction" type="Node" parent="CopStateManager" unique_id=1194538153 node_paths=PackedStringArray("unit")]
+script = ExtResource("9_h0nw5")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="Directing" type="Node" parent="CopStateManager" unique_id=1422059978 node_paths=PackedStringArray("unit")]
+script = ExtResource("10_8su2l")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
