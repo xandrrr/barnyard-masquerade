@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cgr45mwh7lvnn"]
+
+[ext_resource type="AudioStream" uid="uid://dkl7kiab5iclv" path="res://music/barnyardMusic.mp3" id="1_4m5bw"]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" unique_id=985539750]
+stream = ExtResource("1_4m5bw")
+autoplay = true
+parameters/looping = true
