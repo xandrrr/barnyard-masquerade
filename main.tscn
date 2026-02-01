@@ -194,6 +194,7 @@ text = "Results"
 root_node = NodePath("../MainControl/PhasePanel")
 libraries/ = SubResource("AnimationLibrary_lquwl")
 
+[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [node name="CopChooseRoomAnimator" type="AnimationPlayer" parent="." unique_id=383210231]
 libraries/ = SubResource("AnimationLibrary_kek77")
 
