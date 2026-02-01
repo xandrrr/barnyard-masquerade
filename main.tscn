@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dl1pshdi185jd" path="res://unit_manager.gd" id="1_1bvp3"]
 [ext_resource type="Script" uid="uid://bkki4vmw1adyq" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://b5lhopk441v7h" path="res://character_select.tscn" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://cbqxk3r4grpp1" path="res://tile_manager.gd" id="4_lquwl"]
 
 [node name="Main" type="Node2D" unique_id=26801442]
@@ -13,6 +14,8 @@ tile_manager = NodePath("../TileManager")
 
 [node name="TileManager" type="Node2D" parent="." unique_id=1973299878]
 script = ExtResource("4_lquwl")
+
+[node name="CharacterSelect" parent="." unique_id=820972875 instance=ExtResource("4_1bvp3")]
 
 [node name="MainControl" type="Control" parent="." unique_id=269909978]
 layout_mode = 3

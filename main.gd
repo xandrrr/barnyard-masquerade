@@ -6,6 +6,16 @@ var current_turn : Unit = null
 var current_steps : Array = []
 
 func _ready() -> void:
+	
+	var player_select = await $CharacterSelect.playerSelect
+	print(player_select)
+	var player_dictionary = {
+		player_select[0]: 1,
+		player_select[1]: 2,
+		player_select[2]: 3
+	}
+	#do things with char select
+	#{array[0]: 1, array[1]: 2, array[2]: 3, array[3]: 4}
 	$TileManager.create_map(3, 3)
 	$UnitManager.create_player_unit()
 	update_queued_move_display()

@@ -5,6 +5,8 @@ var selected_player = null
 var player_selection: Array[String] = []
 var count = 0
 
+signal playerSelect
+
 #if player clicks character button, display animal name chosen
 #if player hits confirm button below, store player selected and make button no longer selectable as
 #other players pick their character
@@ -126,6 +128,16 @@ func _on_confirm_button_pressed() -> void:
 		player_selection.append(selected_player)
 		count += 1
 		if count == 5:
-			print(player_selection)
+			#print(player_selection)
+			print(self.visible)
+			self.visible = false
+			print(self.visible)
+			playerSelect.emit(player_selection)
+			#toggle visabilites
+			#visible = false
+			
+			#print("\$'.'")
+			#et_node($/CharacterSelect).get_value()
+			#get_node(MainControl)
 			get_tree().change_scene_to_file("res://main.tscn")
 		
