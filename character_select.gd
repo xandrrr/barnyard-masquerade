@@ -130,6 +130,7 @@ func _on_confirm_button_pressed() -> void:
 		if count == 5:
 			#print(player_selection)
 			print(self.visible)
+			
 			self.visible = false
 			print(self.visible)
 			playerSelect.emit(player_selection)
@@ -139,5 +140,5 @@ func _on_confirm_button_pressed() -> void:
 			#print("\$'.'")
 			#et_node($/CharacterSelect).get_value()
 			#get_node(MainControl)
-			get_tree().change_scene_to_file("res://main.tscn")
+			#get_tree().change_scene_to_file("res://main.tscn")
 		
