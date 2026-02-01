@@ -126,7 +126,6 @@ script = ExtResource("4_lquwl")
 [node name="CharacterSelect" parent="." unique_id=820972875 instance=ExtResource("4_1bvp3")]
 
 [node name="MainControl" type="Control" parent="." unique_id=269909978]
-visible = false
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
@@ -135,6 +134,7 @@ offset_bottom = 720.0
 grow_horizontal = 2
 
 [node name="InformationVBox" type="VBoxContainer" parent="MainControl" unique_id=677326815]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

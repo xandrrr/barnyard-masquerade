@@ -10,6 +10,7 @@ var current_steps : Dictionary = {
 	2 : [],
 	3 : []
 }
+
 var current_cop_steps : Array = []
 var current_cop_step_index : int = 0
 
@@ -22,72 +23,43 @@ var current_turn_index = -1
 var current_player_acting = null
 var is_cop_movement : bool = false
 var is_cop_surveillance : bool = false
-var test_players = [
-	1, 2, 3
-]
+
+var character_table = ["Cow", "Chicken", "Horse", "Goat", "Sheep", "Raccoon", "Dog", "Cat", "Donkey"]
+
+var character_dictionary = {}
 
 var next_phase : String = "None"
 
 func _ready() -> void:
+	for character in character_table:
+		character_dictionary[character] = false
 	
-	var player_select = await $CharacterSelect.playerSelect
-	print(player_select)
-	#cow, chicken, horse, goat, sheep, dog, cat, raccoon, donkey
-	specificAnimalFile = iterate_for_animal_info(player_select)
-	var player_dictionary = {
-		1 : specificAnimalFile[0],
-		2 :specificAnimalFile[1],
-		3 : specificAnimalFile[2]
-	}
-	#
-	total_animals = [""]
-	#maybe to total animal dictionary, then based on incoming array, get the values associated with 
-	#each animal and put to player?
-	#then switch statement to match ids to information, no wait. why
-	#do things with char select
-	#{array[0]: 1, array[1]: 2, array[2]: 3, array[3]: 4}
+	await $CharacterSelect.playerSelect
+	
 	$TileManager.create_map(3, 3)
-	for test_player in test_players:
-		current_player_units[test_player] = $UnitManager.create_player_unit()
-		current_players.append(test_player)
-	for i in range(6):
-		var npc = $UnitManager.create_npc()
-		current_npcs.append(npc)
+	for player in $CharacterSelect.player_selections.keys():
+		var new_unit = $UnitManager.create_player_unit()
+		new_unit.character_name = $CharacterSelect.player_selections[player]
+		new_unit.character_texture = load("res://test_icon.png")
+		current_player_units[player] = new_unit
+		current_players.append(player)
+		
+		character_dictionary[new_unit.character_name] = true
+	
+	for character in character_dictionary.keys():
+		if character_dictionary[character] == false:
+			var npc = $UnitManager.create_npc()
+			npc.character_name = character
+			npc.character_texture = load("res://test_icon.png")
+			current_npcs.append(npc)
+		
 	current_cop = $UnitManager.create_cop()
 	for tile in $TileManager.tiles:
 		tile.update_food_tally()
-		$MainControl/InformationVBox.visible = true
-	change_turn()
 	
-func iterate_for_animal_info(player_select):
-	for i in range(player_select):
-		var specificAnimalFile = find_info_related_to_animal(player_select)
-		animalFileArray += specificAnimalFile
-	return specificAnimalFile
+	$MainControl.visible = true
+	change_turn()
 
-func find_info_related_to_animal(player_select):
-	for player in player_select:
-		if player == "Cow":
-			#assign files cow
-		elif player == "Chicken":
-			#load the files
-		elif player == "Horse":
-			#load the files
-		elif player == "Goat":
-			#load the files
-		elif player == "Sheep":
-			#load the files
-		elif player == "Dog":
-			#load the files
-		elif player == "Cat":
-			#load the files
-		elif player == "Raccoon":
-			#load the files
-		elif player == "Donkey":
-			#load the files
-		else:
-			pass
-		return specific_files
 
 func update_deposited_food_tally():
 	$MainControl/InformationVBox/FoodDepositedLabel.text = "Food deposited: " + str(food_deposited_amount)
@@ -183,7 +155,7 @@ func play_cop_action(action_name : String):
 				if target_character and !target_character.is_revealed:
 					target_selected = true
 					target_character.is_revealed = true
-					target_character.get_node("UnitSprite").rotation_degrees = 180
+					target_character.get_node("UnitSprite").texture = target_character.character_texture
 					var message = str(target_character.name) + " has been revealed!"
 					current_cop.directing.emit()
 					display_message(message)

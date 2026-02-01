@@ -2,7 +2,11 @@ extends Control
 
 @onready var player_label: Label = $playerNumLabel2
 var selected_player = null
-var player_selection: Array[String] = []
+var player_selections : Dictionary = {
+	1 : null,
+	2 : null,
+	3 : null
+}
 var count = 0
 
 signal playerSelect
@@ -102,21 +106,9 @@ func _on_confirm_button_pressed() -> void:
 			"Donkey":
 				$VBoxContainer/secondRowCont/character10.disabled = true
 				
-		player_selection.append(selected_player)
+		player_selections[count + 1] = selected_player
 		count += 1
 		if count == 3:
-			#print(player_selection)
-			#print(self.visible)
-			
 			self.visible = false
-			get_node("../MainControl").visible = true
-			#print(self.visible)
-			playerSelect.emit(player_selection)
-			#toggle visabilites
-			#visible = false
-			
-			#print("\$'.'")
-			#et_node($/CharacterSelect).get_value()
-			#get_node(MainControl)
-			#get_tree().change_scene_to_file("res://main.tscn")
-		
+			print(player_selections)
+			playerSelect.emit()

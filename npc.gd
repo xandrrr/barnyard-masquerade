@@ -5,6 +5,7 @@ var is_npc : bool = true
 var is_revealed : bool = false
 var is_eliminated : bool = false
 var character_name : String
+var character_texture : Texture2D
 
 func _ready() -> void:
 	add_to_group("Units")
