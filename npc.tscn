@@ -7,6 +7,7 @@
 size = Vector2(25, 25)
 
 [node name="NPC" type="CharacterBody2D" unique_id=679955636]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_xxcha")
 
 [node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]

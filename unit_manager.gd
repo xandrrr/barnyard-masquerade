@@ -86,9 +86,7 @@ func move_npc(npc : Npc):
 	var adjacent_tiles = tile_manager.get_adjacent_tiles(npc.current_tile)
 	var random_tile_index = randi_range(0, (adjacent_tiles.size() - 1))
 	var random_tile = adjacent_tiles[random_tile_index]
-	random_tile.take_npc(npc)
-	var tween = get_tree().create_tween()
-	tween.tween_property(npc, "position", random_tile.position, 1.0)
+	npc.dance_to_tile(random_tile)
 
 
 func move_all_npcs():

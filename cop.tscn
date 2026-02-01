@@ -15,6 +15,8 @@
 size = Vector2(25, 25)
 
 [node name="Cop" type="CharacterBody2D" unique_id=679955636]
+texture_filter = 2
+scale = Vector2(2, 2)
 script = ExtResource("1_0qtrv")
 
 [node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]

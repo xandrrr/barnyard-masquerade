@@ -80,10 +80,7 @@ func add_step(enactor : Unit, target_tile : Tile, action_name : String):
 
 func play_step(step : Array):
 	var unit = step[0]
-	unit.position = unit.current_tile.position
-	var tween = get_tree().create_tween()
-	tween.tween_property(unit, "position", step[1].position, 1.0)
-	unit.current_tile = step[1]
+	unit.dance_to_tile(step[1])
 	match step[2]:
 		"Collect":
 			step[1].distribute_food(step[0], 1)
