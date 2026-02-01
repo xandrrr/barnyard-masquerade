@@ -41,7 +41,7 @@ func _ready() -> void:
 
 
 func update_deposited_food_tally():
-	$MainControl/FoodDepositedLabel.text = "Food deposited: " + str(food_deposited_amount)
+	$MainControl/InformationVBox/FoodDepositedLabel.text = "Food deposited: " + str(food_deposited_amount)
 
 
 func prepare_new_turn():
@@ -115,6 +115,11 @@ func play_cop_action(action_name : String):
 			current_cop.current_tile.remove_food(2)
 			current_cop.current_tile.update_food_tally()
 		"Inspect":
+			var instructions = """
+			Available Actions:
+			A (Right) - Confirm Inspection
+			"""
+			$MainControl/InformationVBox/InstructionsLabel.text = instructions
 			var current_target_quadrant =  current_cop.current_tile.get_quadrant_from_coordinates(0,0)
 			var reticle = current_cop.get_node("ReticleSprite")
 			current_cop.current_target_quadrant = current_target_quadrant
@@ -140,6 +145,11 @@ func play_cop_action(action_name : String):
 			current_cop.action_finished.emit()
 			reticle.visible = false
 		"Convict":
+			var instructions = """
+			Available Actions:
+			A (Right) - Confirm Conviction
+			"""
+			$MainControl/InformationVBox/InstructionsLabel.text = instructions
 			var current_target_quadrant =  current_cop.current_tile.get_quadrant_from_coordinates(0,0)
 			var reticle = current_cop.get_node("ReticleSprite")
 			current_cop.current_target_quadrant = current_target_quadrant
@@ -176,6 +186,12 @@ func play_cop_action(action_name : String):
 
 
 func iterate_cop_movement():
+	var instructions = """
+	Choose one of your Surveilled rooms to act in:
+	A (Right) - Select this room
+	B (Btm) - Move to next Surveilled room
+	"""
+	$MainControl/InformationVBox/InstructionsLabel.text = instructions
 	var step = current_cop_steps[current_cop_step_index]
 	current_cop.position = current_cop.current_tile.position
 	var tween = get_tree().create_tween()
@@ -185,7 +201,14 @@ func iterate_cop_movement():
 	current_cop_step_index += 1
 	if current_cop_step_index < 3:
 		current_cop.awaiting_confirmation.emit()
-	else: 
+	else:
+		var secondary_instructions = """
+		Available Actions:
+		Y (Left) - Destroy 2 food on tile
+		Left Trigger - Inspect Dancer's identity
+		Right Trigger - Convict revealed Dancer
+		"""
+		$MainControl/InformationVBox/InstructionsLabel.text = secondary_instructions
 		step[1].take_cop(current_cop)
 		current_cop.awaiting_action.emit()
 
@@ -202,7 +225,7 @@ func change_turn():
 			current_player_acting = current_players[current_turn_index]
 			var current_unit = current_player_units[current_player_acting]
 			if not current_unit.is_eliminated:
-				display_message("Next up: Player " + str(current_turn_index + 1))
+				display_message("Next up: " + current_unit.name)
 				
 				#pause to confirm turn
 				await get_tree().create_timer(0.5).timeout
@@ -213,9 +236,27 @@ func change_turn():
 				current_unit.steps_queued = 0
 				await get_tree().create_timer(0.05).timeout
 				current_unit.unit_turn_started.emit()
+				$MainControl/InformationVBox/CurrentPlayerLabel.text = "Current Player : " + current_unit.name
+				$MainControl/InformationVBox/InventoryLabel.text = "You have " + str(current_unit.food_amount) + " food."
+				$MainControl/InformationVBox/RemainingStepsLabel.text = "Steps Remaining: 3"
+				var instructions = """
+				Available Actions:
+				Y (Left) - Collect
+				B (Btm) - Blend in (Do nothing)
+				X (Top) - Deposit
+				"""
+				$MainControl/InformationVBox/InstructionsLabel.text = instructions
 			else:
 				change_turn()
 		else:
+			$MainControl/InformationVBox/CurrentPlayerLabel.text = "Current Player : The Cop"
+			$MainControl/InformationVBox/InventoryLabel.text = "Stop them from collecting food!"
+			$MainControl/InformationVBox/RemainingStepsLabel.text = "Steps Remaining: 3"
+			var instructions = """
+			Available Actions:
+			A (Right) - Choose tile to Surveil
+			"""
+			$MainControl/InformationVBox/InstructionsLabel.text = instructions
 			display_message("Next up: The Cop")
 			current_cop.directing.emit()
 			await get_tree().create_timer(0.5).timeout
@@ -229,6 +270,7 @@ func change_turn():
 		is_cop_movement = false
 		current_cop.unit_turn_concluded.emit()
 		current_cop.steps_queued = 0
+		$MainControl/InformationVBox/InstructionsLabel.text = ""
 		display_message("Let's Dance!")
 		#pause to confirm everyone is ready
 		await get_tree().create_timer(0.5).timeout
@@ -240,6 +282,7 @@ func change_turn():
 
 func display_board():
 	display_message("Results")
+	$MainControl/InformationVBox/InstructionsLabel.text = ""
 	await get_tree().create_timer(1.0).timeout
 	current_cop.directing.emit()
 	await current_cop.pass_direction
@@ -264,7 +307,13 @@ func check_for_winner():
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
 		await current_cop.pass_direction
-	elif current_player_units.size() == 0:
+	
+	var players_remaining : int = 3
+	for unit in current_player_units.keys():
+		if current_player_units[unit].is_eliminated:
+			players_remaining -= 1
+	
+	if players_remaining == 0:
 		display_message("No Robbers remain. The Cop wins!")
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
@@ -296,6 +345,9 @@ func _on_unit_manager_move_requested(enactor: Unit, target_tile: Tile, action_na
 		enactor.get_node("ProjectionSprite").global_position = target_tile.position
 		if enactor.steps_queued == 3:
 			change_turn()
+		else: 
+			var remaining_moves = 3 - enactor.steps_queued
+			$MainControl/InformationVBox/RemainingStepsLabel.text = "Steps Remaining: " + str(remaining_moves)
 
 
 func _on_unit_manager_cop_move_requested(enactor: Cop, target_tile: Tile, action_name: String) -> void:
@@ -305,9 +357,19 @@ func _on_unit_manager_cop_move_requested(enactor: Cop, target_tile: Tile, action
 		enactor.get_node("ProjectionSprite").global_position = target_tile.position
 		if enactor.steps_queued == 3:
 			change_turn()
+		else: 
+			var remaining_moves = 3 - enactor.steps_queued
+			$MainControl/InformationVBox/RemainingStepsLabel.text = "Steps Remaining: " + str(remaining_moves)
 
 
 func _on_unit_manager_cop_room_decision(decision: bool) -> void:
+	var instructions = """
+	Available Actions:
+	Y (Left) - Destroy 2 food on tile
+	Left Trigger - Inspect Dancer's identity
+	Right Trigger - Convict revealed Dancer
+	"""
+	$MainControl/InformationVBox/InstructionsLabel.text = instructions
 	if decision:
 		current_cop.awaiting_action.emit()
 	else:
