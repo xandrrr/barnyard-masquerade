@@ -44,3 +44,10 @@ func _ready() -> void:
 		state = get_node("AwaitingAction")
 		state.enter(previous_state_path)
 	)
+	
+	unit.directing.connect(func():
+		var previous_state_path := state.name
+		state.exit()
+		state = get_node("Directing")
+		state.enter(previous_state_path)
+	)

@@ -18,6 +18,8 @@ signal unit_turn_concluded
 signal starting_player_targeting
 signal awaiting_confirmation
 signal awaiting_action
+signal directing
+signal pass_direction
 
 func _ready() -> void:
 	add_to_group("Units")

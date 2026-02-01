@@ -24,6 +24,8 @@ var test_players = [
 	1, 2, 3
 ]
 
+var next_phase : String = "None"
+
 func _ready() -> void:
 	$TileManager.create_map(3, 3)
 	for test_player in test_players:
@@ -140,21 +142,30 @@ func iterate_cop_movement():
 func change_turn():
 	if not is_cop_movement:
 		current_turn_index += 1
-		print("turn index: " + str(current_turn_index))
-		print("is cop movement: " + str(is_cop_movement))
-		print("current_players size " + str(current_players.size()))
 		if current_player_acting:
 			var previous_unit = current_player_units[current_player_acting]
 			previous_unit.unit_turn_concluded.emit()
 			previous_unit.steps_queued = 0
 		
 		if current_turn_index < current_players.size():
+			introduce_phase("Next up: Player " + str(current_turn_index + 1))
 			current_player_acting = current_players[current_turn_index]
 			var current_unit = current_player_units[current_player_acting]
+			
+			#pause to confirm turn
+			await get_tree().create_timer(0.5).timeout
+			current_cop.directing.emit()
+			await current_cop.pass_direction
+			
+			#start turn
 			current_unit.steps_queued = 0
 			await get_tree().create_timer(0.05).timeout
 			current_unit.unit_turn_started.emit()
 		else:
+			introduce_phase("Next up: The Cop")
+			current_cop.directing.emit()
+			await get_tree().create_timer(0.5).timeout
+			await current_cop.pass_direction
 			current_player_acting = null
 			is_cop_movement = true
 			current_cop.steps_queued = 0
@@ -164,7 +175,63 @@ func change_turn():
 		is_cop_movement = false
 		current_cop.unit_turn_concluded.emit()
 		current_cop.steps_queued = 0
+		introduce_phase("Let's Dance!")
+		#pause to confirm everyone is ready
+		await get_tree().create_timer(0.5).timeout
+		current_cop.directing.emit()
+		await current_cop.pass_direction
+		await get_tree().create_timer(0.5).timeout
 		play_turn()
+
+
+func display_board():
+	introduce_phase("Results")
+	await get_tree().create_timer(1.0).timeout
+	current_cop.directing.emit()
+	await current_cop.pass_direction
+	
+	await get_tree().create_timer(0.5).timeout
+	current_cop.directing.emit()
+	await current_cop.pass_direction
+	check_for_winner()
+
+
+func check_for_winner():
+	var total_food_amount = 0
+	for tile in $TileManager.tiles:
+		total_food_amount += tile.food_amount
+	total_food_amount += current_player_units[1].food_amount
+	total_food_amount += current_player_units[2].food_amount
+	total_food_amount += current_player_units[3].food_amount
+	total_food_amount += food_deposited_amount
+	
+	if food_deposited_amount >= 35:
+		introduce_phase("35 food has been delivered. The Robbers win!")
+		await get_tree().create_timer(1.0).timeout
+		current_cop.directing.emit()
+		await current_cop.pass_direction
+	elif current_player_units.size() == 0:
+		introduce_phase("No Robbers remain. The Cop wins!")
+		await get_tree().create_timer(1.0).timeout
+		current_cop.directing.emit()
+		await current_cop.pass_direction
+	elif total_food_amount < 35:
+		introduce_phase("Not enough food remains. The Cop wins!")
+		await get_tree().create_timer(1.0).timeout
+		current_cop.directing.emit()
+		await current_cop.pass_direction
+	else:
+		prepare_new_turn()
+
+
+func introduce_phase(phase_text : String):
+	await get_tree().create_timer(0.05).timeout
+	current_cop.directing.emit()
+	$MainControl/PhasePanel/CenterContainer/PhaseLabel.text = phase_text
+	$PhaseAnimator.play("fade_phase_in")
+	await get_tree().create_timer(0.5).timeout
+	await current_cop.pass_direction
+	$PhaseAnimator.play("fade_phase_out")
 
 
 func _on_unit_manager_move_requested(enactor: Unit, target_tile: Tile, action_name: String) -> void:
@@ -196,5 +263,4 @@ func _on_unit_manager_cop_room_decision(decision: bool) -> void:
 func _on_unit_manager_cop_action_decided(action_name: String) -> void:
 	play_cop_action(action_name)
 	await get_tree().create_timer(0.05).timeout
-	#TODO: Change this to display results
-	prepare_new_turn()
+	display_board()

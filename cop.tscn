@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://o30ldsbo2uo5" path="res://targeting_player.gd" id="7_xwtm4"]
 [ext_resource type="Script" uid="uid://bf1mdggk3os35" path="res://AwaitingConfirmation.gd" id="8_pvkf1"]
 [ext_resource type="Script" uid="uid://cu5snc75qa66p" path="res://awaiting_action.gd" id="9_h0nw5"]
+[ext_resource type="Script" uid="uid://cv8loe2ag2ano" path="res://directing.gd" id="10_8su2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
 size = Vector2(25, 25)
@@ -66,5 +67,10 @@ metadata/_custom_type_script = "uid://teapur67yax4"
 
 [node name="AwaitingAction" type="Node" parent="CopStateManager" unique_id=1194538153 node_paths=PackedStringArray("unit")]
 script = ExtResource("9_h0nw5")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://teapur67yax4"
+
+[node name="Directing" type="Node" parent="CopStateManager" unique_id=1422059978 node_paths=PackedStringArray("unit")]
+script = ExtResource("10_8su2l")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://teapur67yax4"
