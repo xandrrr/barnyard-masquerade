@@ -127,5 +127,5 @@ func _on_confirm_button_pressed() -> void:
 		count += 1
 		if count == 5:
 			print(player_selection)
-			#get_tree().change_scene_to_file("res://main.tscn")
+			get_tree().change_scene_to_file("res://main.tscn")
 		

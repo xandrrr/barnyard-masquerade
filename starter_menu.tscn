@@ -1,32 +1,61 @@
 [gd_scene format=3 uid="uid://p35e0b2cnybw"]
 
 [ext_resource type="Script" uid="uid://b675txx841ply" path="res://starter_menu.gd" id="1_n1bph"]
+[ext_resource type="Texture2D" uid="uid://1vljnbm32rtb" path="res://sprites/image-1.png.png" id="2_qbbcb"]
+[ext_resource type="FontFile" uid="uid://cjvh0fllrue8t" path="res://fonts/Masquerade.ttf" id="2_thjnl"]
 
 [node name="StarterMenu" type="Control" unique_id=2135858070]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n1bph")
 
+[node name="Image1_png" type="Sprite2D" parent="." unique_id=747025547]
+position = Vector2(640, 372)
+scale = Vector2(1, 0.91999876)
+texture = ExtResource("2_qbbcb")
+metadata/_edit_lock_ = true
+
 [node name="Label" type="Label" parent="." unique_id=664525992]
 layout_mode = 0
-offset_left = 296.0
-offset_top = 147.0
-offset_right = 1033.0
-offset_bottom = 208.0
-theme_override_font_sizes/font_size = 44
-text = "Barnyard Masqerade (placeholder)"
+offset_left = 722.0
+offset_top = 436.0
+offset_right = 1104.0
+offset_bottom = 577.0
+theme_override_colors/font_color = Color(0.9779369, 0.97793704, 0.9779369, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_thjnl")
+theme_override_font_sizes/font_size = 45
+text = "Barnyard 
+Masqerade "
 
 [node name="Button" type="Button" parent="." unique_id=1467304258]
 layout_mode = 0
-offset_left = 577.0
-offset_top = 351.0
-offset_right = 671.0
-offset_bottom = 418.0
-theme_override_font_sizes/font_size = 43
+offset_left = 179.0
+offset_top = 378.0
+offset_right = 303.0
+offset_bottom = 445.0
+theme_override_fonts/font = ExtResource("2_thjnl")
+theme_override_font_sizes/font_size = 42
 text = "Play"
 
+[node name="Button2" type="Button" parent="." unique_id=1436055619]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 460.0
+offset_right = 321.0
+offset_bottom = 627.0
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_thjnl")
+theme_override_font_sizes/font_size = 42
+text = "Rules
+&
+Roles"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_pressed"]
