@@ -153,7 +153,7 @@ layout_mode = 2
 [node name="PhaseLabel" type="Label" parent="MainControl/PhasePanel/CenterContainer" unique_id=1624846789]
 layout_mode = 2
 theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 32
 text = "Results"
 
 [node name="PhaseAnimator" type="AnimationPlayer" parent="." unique_id=1974561950]

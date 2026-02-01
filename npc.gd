@@ -2,7 +2,9 @@ class_name Npc extends CharacterBody2D
 
 var current_tile : Tile = null
 var is_npc : bool = true
-
+var is_revealed : bool = false
+var is_eliminated : bool = false
+var character_name : String
 
 func _ready() -> void:
 	add_to_group("Units")

@@ -115,9 +115,63 @@ func play_cop_action(action_name : String):
 			current_cop.current_tile.remove_food(2)
 			current_cop.current_tile.update_food_tally()
 		"Inspect":
-			pass
+			var current_target_quadrant =  current_cop.current_tile.get_quadrant_from_coordinates(0,0)
+			var reticle = current_cop.get_node("ReticleSprite")
+			current_cop.current_target_quadrant = current_target_quadrant
+			current_cop.starting_player_targeting.emit()
+			reticle.visible = true
+			reticle.global_position = current_target_quadrant.global_position
+			var target_selected = false
+			
+			while target_selected == false:
+				await current_cop.target_selected
+				var target_character = current_cop.current_target_quadrant.occupant
+				if target_character and !target_character.is_revealed:
+					target_selected = true
+					target_character.is_revealed = true
+					target_character.get_node("UnitSprite").rotation_degrees = 180
+					var message = str(target_character.name) + " has been revealed!"
+					current_cop.directing.emit()
+					display_message(message)
+					await get_tree().create_timer(0.5).timeout
+					await current_cop.pass_direction
+					await get_tree().create_timer(0.5).timeout
+			
+			current_cop.action_finished.emit()
+			reticle.visible = false
 		"Convict":
-			pass
+			var current_target_quadrant =  current_cop.current_tile.get_quadrant_from_coordinates(0,0)
+			var reticle = current_cop.get_node("ReticleSprite")
+			current_cop.current_target_quadrant = current_target_quadrant
+			current_cop.starting_player_targeting.emit()
+			reticle.visible = true
+			reticle.global_position = current_target_quadrant.global_position
+			var target_selected = false
+			
+			while target_selected == false:
+				await current_cop.target_selected
+				var target_character = current_cop.current_target_quadrant.occupant
+				if target_character and target_character.is_revealed:
+					target_selected = true
+					target_character.is_eliminated = true
+					target_character.visible = false
+					if target_character.is_npc:
+						var message = str(target_character.name) + " has been eliminated! They were an NPC."
+						current_cop.directing.emit()
+						display_message(message)
+						await get_tree().create_timer(0.5).timeout
+						await current_cop.pass_direction
+						await get_tree().create_timer(0.5).timeout
+					else:
+						var message = str(target_character.name) + " has been eliminated! They were a player!"
+						current_cop.directing.emit()
+						display_message(message)
+						await get_tree().create_timer(0.5).timeout
+						await current_cop.pass_direction
+						await get_tree().create_timer(0.5).timeout
+			
+			current_cop.action_finished.emit()
+			reticle.visible = false
 	current_cop.current_projection = current_cop.current_tile
 
 
@@ -145,21 +199,24 @@ func change_turn():
 			previous_unit.steps_queued = 0
 		
 		if current_turn_index < current_players.size():
-			introduce_phase("Next up: Player " + str(current_turn_index + 1))
 			current_player_acting = current_players[current_turn_index]
 			var current_unit = current_player_units[current_player_acting]
-			
-			#pause to confirm turn
-			await get_tree().create_timer(0.5).timeout
-			current_cop.directing.emit()
-			await current_cop.pass_direction
-			
-			#start turn
-			current_unit.steps_queued = 0
-			await get_tree().create_timer(0.05).timeout
-			current_unit.unit_turn_started.emit()
+			if not current_unit.is_eliminated:
+				display_message("Next up: Player " + str(current_turn_index + 1))
+				
+				#pause to confirm turn
+				await get_tree().create_timer(0.5).timeout
+				current_cop.directing.emit()
+				await current_cop.pass_direction
+				
+				#start turn
+				current_unit.steps_queued = 0
+				await get_tree().create_timer(0.05).timeout
+				current_unit.unit_turn_started.emit()
+			else:
+				change_turn()
 		else:
-			introduce_phase("Next up: The Cop")
+			display_message("Next up: The Cop")
 			current_cop.directing.emit()
 			await get_tree().create_timer(0.5).timeout
 			await current_cop.pass_direction
@@ -172,7 +229,7 @@ func change_turn():
 		is_cop_movement = false
 		current_cop.unit_turn_concluded.emit()
 		current_cop.steps_queued = 0
-		introduce_phase("Let's Dance!")
+		display_message("Let's Dance!")
 		#pause to confirm everyone is ready
 		await get_tree().create_timer(0.5).timeout
 		current_cop.directing.emit()
@@ -182,7 +239,7 @@ func change_turn():
 
 
 func display_board():
-	introduce_phase("Results")
+	display_message("Results")
 	await get_tree().create_timer(1.0).timeout
 	current_cop.directing.emit()
 	await current_cop.pass_direction
@@ -203,17 +260,17 @@ func check_for_winner():
 	total_food_amount += food_deposited_amount
 	
 	if food_deposited_amount >= 35:
-		introduce_phase("35 food has been delivered. The Robbers win!")
+		display_message("35 food has been delivered. The Robbers win!")
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
 		await current_cop.pass_direction
 	elif current_player_units.size() == 0:
-		introduce_phase("No Robbers remain. The Cop wins!")
+		display_message("No Robbers remain. The Cop wins!")
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
 		await current_cop.pass_direction
 	elif total_food_amount < 35:
-		introduce_phase("Not enough food remains. The Cop wins!")
+		display_message("Not enough food remains. The Cop wins!")
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
 		await current_cop.pass_direction
@@ -221,7 +278,7 @@ func check_for_winner():
 		prepare_new_turn()
 
 
-func introduce_phase(phase_text : String):
+func display_message(phase_text : String):
 	await get_tree().create_timer(0.05).timeout
 	current_cop.directing.emit()
 	$MainControl/PhasePanel/CenterContainer/PhaseLabel.text = phase_text
@@ -259,5 +316,7 @@ func _on_unit_manager_cop_room_decision(decision: bool) -> void:
 
 func _on_unit_manager_cop_action_decided(action_name: String) -> void:
 	play_cop_action(action_name)
+	if action_name != "Eat":
+		await current_cop.action_finished
 	await get_tree().create_timer(0.05).timeout
 	display_board()

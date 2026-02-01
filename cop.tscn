@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dvmrbdl7fa611" path="res://cop.gd" id="1_0qtrv"]
 [ext_resource type="Texture2D" uid="uid://dl1oe3qcbwlmn" path="res://sprites/copIcon.png" id="2_0qtrv"]
 [ext_resource type="Script" uid="uid://c3jv43vfh3o80" path="res://cop_state_manager.gd" id="3_10vfs"]
+[ext_resource type="Texture2D" uid="uid://on3g8u3rknif" path="res://sprites/reticle.png" id="3_d0aqw"]
 [ext_resource type="Script" uid="uid://bqciqppemdnfb" path="res://dancing.gd" id="5_pvkf1"]
 [ext_resource type="Script" uid="uid://boflh0uwcxd7h" path="res://queueing_cop_movement.gd" id="6_10vfs"]
 [ext_resource type="Script" uid="uid://dm57whrhey4cd" path="res://waiting.gd" id="6_h0nw5"]
@@ -36,6 +37,11 @@ texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("2_0qtrv")
 
+[node name="ReticleSprite" type="Sprite2D" parent="." unique_id=1816673260]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_d0aqw")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=145315928]
 shape = SubResource("RectangleShape2D_lquwl")
 
@@ -58,8 +64,9 @@ script = ExtResource("6_10vfs")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://teapur67yax4"
 
-[node name="TargetingPlayer" type="Node" parent="CopStateManager" unique_id=642033270]
+[node name="TargetingPlayer" type="Node" parent="CopStateManager" unique_id=642033270 node_paths=PackedStringArray("unit")]
 script = ExtResource("7_xwtm4")
+unit = NodePath("../..")
 metadata/_custom_type_script = "uid://teapur67yax4"
 
 [node name="AwaitingConfirmation" type="Node" parent="CopStateManager" unique_id=1989269184 node_paths=PackedStringArray("unit")]

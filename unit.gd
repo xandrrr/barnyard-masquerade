@@ -7,6 +7,8 @@ var food_amount : int = 0
 var is_npc : bool = false
 var steps_queued : int = 0
 var is_revealed : bool = false
+var is_eliminated : bool = false
+var character_name : String
 
 signal request_step(target_tile : Tile, action_name : String)
 signal tile_change_requested(target_coordinate_x : int, target_coordinate_y : int)

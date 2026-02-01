@@ -83,10 +83,11 @@ func create_npc():
 
 
 func move_npc(npc : Npc):
-	var adjacent_tiles = tile_manager.get_adjacent_tiles(npc.current_tile)
-	var random_tile_index = randi_range(0, (adjacent_tiles.size() - 1))
-	var random_tile = adjacent_tiles[random_tile_index]
-	npc.dance_to_tile(random_tile)
+	if not npc.is_eliminated:
+		var adjacent_tiles = tile_manager.get_adjacent_tiles(npc.current_tile)
+		var random_tile_index = randi_range(0, (adjacent_tiles.size() - 1))
+		var random_tile = adjacent_tiles[random_tile_index]
+		npc.dance_to_tile(random_tile)
 
 
 func move_all_npcs():

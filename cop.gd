@@ -7,6 +7,7 @@ var food_amount : int = 0
 var is_npc : bool = false
 var steps_queued : int = 0
 var is_revealed : bool = false
+var current_target_quadrant : Node2D = null
 
 signal request_step(target_tile : Tile, action_name : String)
 signal tile_change_requested(target_coordinate_x : int, target_coordinate_y : int)
@@ -20,6 +21,8 @@ signal awaiting_confirmation
 signal awaiting_action
 signal directing
 signal pass_direction
+signal target_selected
+signal action_finished
 
 func _ready() -> void:
 	add_to_group("Units")

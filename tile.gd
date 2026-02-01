@@ -7,13 +7,6 @@ class_name Tile extends Area2D
 var current_units : Array = []
 var quadrant_map : Dictionary = {}
 
-var quadrant_occupants : Dictionary = {
-	1 : null,
-	2 : null,
-	3 : null,
-	4 : null
-}
-
 func _ready() -> void:
 	add_to_group("Tiles")
 	update_food_tally()
@@ -62,8 +55,8 @@ func remove_food(amount : int):
 func get_empty_quadrant_indexes():
 	var empty_quadrant_indexes : Array = []
 	
-	for quadrant in quadrant_occupants.keys():
-		if quadrant_occupants[quadrant] == null:
+	for quadrant in quadrant_map.keys():
+		if quadrant_map[quadrant].occupant == null:
 			empty_quadrant_indexes.append(quadrant)
 	
 	return empty_quadrant_indexes
@@ -78,26 +71,33 @@ func get_random_empty_quadrant_index():
 
 
 func take_unit_to_quadrant(unit : Unit, quadrant : int):
-	quadrant_occupants[quadrant] = unit
+	quadrant_map[quadrant].occupant = unit
 
 
 func take_npc_to_quadrant(unit : Npc, quadrant : int):
-	quadrant_occupants[quadrant] = unit
+	quadrant_map[quadrant].occupant = unit
 
 
 func release_unit_from_quadrant(unit : Unit):
-	for quadrant in quadrant_occupants.keys():
-		if quadrant_occupants[quadrant] == unit:
-			quadrant_occupants[quadrant] = null
+	for quadrant in quadrant_map.keys():
+		if quadrant_map[quadrant].occupant == unit:
+			quadrant_map[quadrant].occupant = null
 			return
 
 
 func release_npc_from_quadrant(unit : Npc):
-	for quadrant in quadrant_occupants.keys():
-		if quadrant_occupants[quadrant] == unit:
-			quadrant_occupants[quadrant] = null
+	for quadrant in quadrant_map.keys():
+		if quadrant_map[quadrant].occupant == unit:
+			quadrant_map[quadrant].occupant = null
 			return
 
 
 func get_quadrant_from_index(index : int):
 	return quadrant_map[index]
+
+
+func get_quadrant_from_coordinates(x_coord : int, y_coord : int):
+	for quadrant in quadrant_map.keys():
+		var quadrant_node = quadrant_map[quadrant]
+		if quadrant_node.x_coord == x_coord and quadrant_node.y_coord == y_coord:
+			return quadrant_node

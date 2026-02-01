@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cp0viuxr8grah"]
 
 [ext_resource type="Script" uid="uid://fgwpethqpb6p" path="res://tile.gd" id="1_n3f48"]
+[ext_resource type="Script" uid="uid://bfbgqp3qky7xb" path="res://quadrant.gd" id="2_vx4y2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n3f48"]
 bg_color = Color(0.6, 0.6, 0.8901961, 0.27058825)
@@ -62,6 +63,8 @@ horizontal_alignment = 1
 
 [node name="Quadrant1" type="Node2D" parent="Quadrants" unique_id=845998696]
 position = Vector2(64, -64)
+script = ExtResource("2_vx4y2")
+x_coord = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Quadrants/Quadrant1" unique_id=1880642322]
 z_index = -5
@@ -73,6 +76,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_vx4y2")
 
 [node name="Quadrant2" type="Node2D" parent="Quadrants" unique_id=1239368027]
 position = Vector2(-64, -64)
+script = ExtResource("2_vx4y2")
 
 [node name="PanelContainer" type="PanelContainer" parent="Quadrants/Quadrant2" unique_id=232473413]
 z_index = -5
@@ -84,6 +88,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_vx4y2")
 
 [node name="Quadrant3" type="Node2D" parent="Quadrants" unique_id=473741529]
 position = Vector2(-64, 64)
+script = ExtResource("2_vx4y2")
+y_coord = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Quadrants/Quadrant3" unique_id=1657429523]
 z_index = -5
@@ -95,6 +101,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_vx4y2")
 
 [node name="Quadrant4" type="Node2D" parent="Quadrants" unique_id=1335346036]
 position = Vector2(64, 64)
+script = ExtResource("2_vx4y2")
+x_coord = 1
+y_coord = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Quadrants/Quadrant4" unique_id=1802768957]
 z_index = -5
