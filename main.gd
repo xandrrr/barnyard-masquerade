@@ -256,6 +256,11 @@ func change_turn():
 			var previous_unit = current_player_units[current_player_acting]
 			previous_unit.unit_turn_concluded.emit()
 			previous_unit.steps_queued = 0
+			if not previous_unit.is_revealed:
+				previous_unit.get_node("UnitSprite").texture = previous_unit.public_texture
+				previous_unit.get_node("ProjectionSprite").texture = previous_unit.public_texture
+				previous_unit.get_node("ExplorationSprite").texture = previous_unit.public_texture
+			
 		
 		if current_turn_index < current_players.size():
 			current_player_acting = current_players[current_turn_index]
@@ -282,6 +287,9 @@ func change_turn():
 				X (Top) - Deposit
 				"""
 				$MainControl/InformationVBox/InstructionsLabel.text = instructions
+				current_unit.get_node("UnitSprite").texture = current_unit.character_texture
+				current_unit.get_node("ProjectionSprite").texture = current_unit.character_texture
+				current_unit.get_node("ExplorationSprite").texture = current_unit.character_texture
 			else:
 				change_turn()
 		else:

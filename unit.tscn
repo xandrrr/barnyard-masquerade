@@ -13,6 +13,7 @@ size = Vector2(25, 25)
 [node name="Unit" type="CharacterBody2D" unique_id=679955636]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ctwoc")
+public_texture = ExtResource("2_davkp")
 
 [node name="UnitSprite" type="Sprite2D" parent="." unique_id=705627928]
 visible = false
