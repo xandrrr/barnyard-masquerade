@@ -85,7 +85,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
-"values": [0.5061454830783556, 1.8325957145940461]
+"values": [0.5061454830783556, 1.832595714594046]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lquwl"]
@@ -97,86 +97,14 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_7mycd"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MainControl/CopChooseRoomPanel:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainControl/CopChooseRoomPanel:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 600)]
-}
 
 [sub_resource type="Animation" id="Animation_272bh"]
 resource_name = "enter"
 length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MainControl/CopChooseRoomPanel:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainControl/CopChooseRoomPanel:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [Vector2(1280, 600), Vector2(0, 600)]
-}
 
 [sub_resource type="Animation" id="Animation_5vw27"]
 resource_name = "leave"
 length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MainControl/CopChooseRoomPanel:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainControl/CopChooseRoomPanel:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(2, 1),
-"update": 0,
-"values": [Vector2(0, 600), Vector2(-1280, 600)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kek77"]
 _data = {
@@ -206,6 +134,7 @@ offset_bottom = 720.0
 grow_horizontal = 2
 
 [node name="InformationVBox" type="VBoxContainer" parent="MainControl" unique_id=677326815]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -244,7 +173,6 @@ theme_override_font_sizes/font_size = 24
 text = "Available Actions:"
 horizontal_alignment = 2
 
-[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [node name="PhasePanel" type="PanelContainer" parent="MainControl" unique_id=221575074]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
@@ -262,22 +190,6 @@ theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 32
 text = "Results"
 
-[node name="CopChooseRoomPanel" type="PanelContainer" parent="MainControl" unique_id=250030558]
-visible = false
-layout_mode = 0
-offset_top = 600.0
-offset_right = 1279.9993
-offset_bottom = 741.0
-
-[node name="PhaseLabel" type="Label" parent="MainControl/CopChooseRoomPanel" unique_id=1942334711]
-layout_mode = 2
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 32
-text = "Act in this room?
-A (Right) - Confirm
-B (Btm) - Move to next Surveilled tile"
-horizontal_alignment = 2
-
 [node name="PhaseAnimator" type="AnimationPlayer" parent="." unique_id=1974561950]
 root_node = NodePath("../MainControl/PhasePanel")
 libraries/ = SubResource("AnimationLibrary_lquwl")
@@ -285,6 +197,7 @@ libraries/ = SubResource("AnimationLibrary_lquwl")
 [node name="CopChooseRoomAnimator" type="AnimationPlayer" parent="." unique_id=383210231]
 libraries/ = SubResource("AnimationLibrary_kek77")
 
+[connection signal="visibility_changed" from="." to="CharacterSelect" method="_on_main_visibility_changed"]
 [connection signal="cop_action_decided" from="UnitManager" to="." method="_on_unit_manager_cop_action_decided"]
 [connection signal="cop_move_requested" from="UnitManager" to="." method="_on_unit_manager_cop_move_requested"]
 [connection signal="cop_room_decision" from="UnitManager" to="." method="_on_unit_manager_cop_room_decision"]

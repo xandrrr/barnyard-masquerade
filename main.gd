@@ -47,6 +47,7 @@ func _ready() -> void:
 	current_cop = $UnitManager.create_cop()
 	for tile in $TileManager.tiles:
 		tile.update_food_tally()
+		$MainControl/InformationVBox.visible = true
 	change_turn()
 
 
