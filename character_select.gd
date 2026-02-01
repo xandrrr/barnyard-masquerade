@@ -71,7 +71,7 @@ func _on_character_8_pressed() -> void:
 
 
 func _on_character_9_pressed() -> void:
-	selected_player = "Racoon"
+	selected_player = "Raccoon"
 	player_label.text = "Animal:  " + selected_player
 	pass # Replace with function body.
 
@@ -101,7 +101,7 @@ func _on_confirm_button_pressed() -> void:
 				$VBoxContainer/secondRowCont/character7.disabled = true
 			"Cat":
 				$VBoxContainer/secondRowCont/character8.disabled = true
-			"Racoon":
+			"Raccoon":
 				$VBoxContainer/secondRowCont/character9.disabled = true
 			"Donkey":
 				$VBoxContainer/secondRowCont/character10.disabled = true

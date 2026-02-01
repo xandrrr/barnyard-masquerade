@@ -19,12 +19,6 @@ signal unit_turn_concluded
 
 func _ready() -> void:
 	add_to_group("Units")
-	
-	update_food_tally()
-
-
-func update_food_tally():
-	$UnitControl/FoodAmountLabel.text = "Food: " + str(food_amount)
 
 
 func cast_projection(tile : Tile):

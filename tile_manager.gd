@@ -19,7 +19,7 @@ func create_map(size_x : int, size_y : int):
 			new_tile.position = Vector2(pos_x, pos_y)
 			tiles.append(new_tile)
 			
-			new_tile.add_food(5)
+			new_tile.add_food(8)
 	
 	map_size_x = size_x
 	map_size_y = size_y

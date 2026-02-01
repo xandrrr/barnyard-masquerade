@@ -126,13 +126,27 @@ script = ExtResource("4_lquwl")
 [node name="CharacterSelect" parent="." unique_id=820972875 instance=ExtResource("4_1bvp3")]
 
 [node name="MainControl" type="Control" parent="." unique_id=269909978]
-visible = false
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
 offset_right = 1280.0
 offset_bottom = 720.0
 grow_horizontal = 2
+
+[node name="StatusGridContainer" type="GridContainer" parent="MainControl" unique_id=272208244]
+custom_minimum_size = Vector2(150, 300)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -267.0
+offset_top = -270.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+columns = 3
 
 [node name="InformationVBox" type="VBoxContainer" parent="MainControl" unique_id=677326815]
 layout_mode = 1

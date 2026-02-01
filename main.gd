@@ -58,6 +58,15 @@ func _ready() -> void:
 		tile.update_food_tally()
 	
 	$MainControl.visible = true
+	
+	for character in character_dictionary.keys():
+		var new_texture_rect = TextureRect.new()
+		new_texture_rect.texture = load("res://test_icon.png")
+		new_texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		new_texture_rect.custom_minimum_size = Vector2(64,64)
+		new_texture_rect.name = character
+		new_texture_rect.modulate = Color(.5, .5, .5, .75)
+		$MainControl/StatusGridContainer.add_child(new_texture_rect)
 	change_turn()
 
 
@@ -105,7 +114,6 @@ func play_step(step : Array):
 	match step[2]:
 		"Collect":
 			step[1].distribute_food(step[0], 1)
-			unit.update_food_tally()
 		"Deposit":
 			var map_size_x = $TileManager.map_size_x
 			var map_size_y = $TileManager.map_size_y
@@ -120,7 +128,6 @@ func play_step(step : Array):
 			):
 				food_deposited_amount += unit.food_amount
 				unit.food_amount = 0
-				unit.update_food_tally()
 		"Nothing":
 			pass
 
@@ -133,7 +140,7 @@ func add_cop_step(enactor : Cop, target_tile : Tile, action_name : String):
 func play_cop_action(action_name : String):
 	match action_name:
 		"Eat":
-			current_cop.current_tile.remove_food(2)
+			current_cop.current_tile.remove_food(3)
 			current_cop.current_tile.update_food_tally()
 		"Inspect":
 			var instructions = """
@@ -156,7 +163,11 @@ func play_cop_action(action_name : String):
 					target_selected = true
 					target_character.is_revealed = true
 					target_character.get_node("UnitSprite").texture = target_character.character_texture
-					var message = str(target_character.name) + " has been revealed!"
+					var message = str(target_character.character_name) + " has been revealed!"
+					var texture_rects = $MainControl/StatusGridContainer.get_children()
+					for texture in texture_rects:
+						if texture.name == target_character.character_name:
+							texture.modulate = Color(1,1,1,.75)
 					current_cop.directing.emit()
 					display_message(message)
 					await get_tree().create_timer(0.5).timeout
@@ -186,15 +197,19 @@ func play_cop_action(action_name : String):
 					target_selected = true
 					target_character.is_eliminated = true
 					target_character.visible = false
+					var texture_rects = $MainControl/StatusGridContainer.get_children()
+					for texture in texture_rects:
+						if texture.name == target_character.character_name:
+							texture.modulate = Color(1,0,0,.75)
 					if target_character.is_npc:
-						var message = str(target_character.name) + " has been eliminated! They were an NPC."
+						var message = str(target_character.character_name) + " has been eliminated! They were an NPC."
 						current_cop.directing.emit()
 						display_message(message)
 						await get_tree().create_timer(0.5).timeout
 						await current_cop.pass_direction
 						await get_tree().create_timer(0.5).timeout
 					else:
-						var message = str(target_character.name) + " has been eliminated! They were a player!"
+						var message = str(target_character.character_name) + " has been eliminated! They were a player!"
 						current_cop.directing.emit()
 						display_message(message)
 						await get_tree().create_timer(0.5).timeout
@@ -246,7 +261,7 @@ func change_turn():
 			current_player_acting = current_players[current_turn_index]
 			var current_unit = current_player_units[current_player_acting]
 			if not current_unit.is_eliminated:
-				display_message("Next up: " + current_unit.name)
+				display_message("Next up: " + current_unit.character_name)
 				
 				#pause to confirm turn
 				await get_tree().create_timer(0.5).timeout
@@ -257,7 +272,7 @@ func change_turn():
 				current_unit.steps_queued = 0
 				await get_tree().create_timer(0.05).timeout
 				current_unit.unit_turn_started.emit()
-				$MainControl/InformationVBox/CurrentPlayerLabel.text = "Current Player : " + current_unit.name
+				$MainControl/InformationVBox/CurrentPlayerLabel.text = "Current Player : " + current_unit.character_name
 				$MainControl/InformationVBox/InventoryLabel.text = "You have " + str(current_unit.food_amount) + " food."
 				$MainControl/InformationVBox/RemainingStepsLabel.text = "Steps Remaining: 3"
 				var instructions = """
@@ -324,7 +339,7 @@ func check_for_winner():
 	total_food_amount += food_deposited_amount
 	
 	if food_deposited_amount >= 35:
-		display_message("35 food has been delivered. The Robbers win!")
+		display_message("45 food has been delivered. The Robbers win!")
 		await get_tree().create_timer(1.0).timeout
 		current_cop.directing.emit()
 		await current_cop.pass_direction
